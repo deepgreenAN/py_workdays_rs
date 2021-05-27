@@ -1,5 +1,5 @@
 # 営業日・営業時間のデータを取得・抽出
-営業日のデータを取得，pandas.DataFrameから営業日・営業時間のデータを抽出できる．計算にrustを用いており[高速](https://github.com/deepgreenAN/py_workdays_rs/wiki/%E9%80%9F%E5%BA%A6%E3%82%92%E8%A8%88%E6%B8%AC)．
+営業日のデータを取得，pandas.DataFrameから営業日・営業時間のデータを抽出できる．計算にrustを用いており[高速](https://github.com/deepgreenAN/py_workdays_rs/wiki/%E9%80%9F%E5%BA%A6%E3%82%92%E8%A8%88%E6%B8%AC)．[こちら](https://github.com/deepgreenAN/py_workdays)のrust実装バージョン．
 ## requirements
 - pytz
 - pandas
