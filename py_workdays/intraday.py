@@ -6,13 +6,13 @@ from datetime import timedelta
 from pytz import timezone
 
 import sys
-sys.path.append("E:/py_workdays_rs/py_workdays/rs_workdays/target/release")
+sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import check_workday_intraday_rs, get_next_border_workday_intraday_rs, get_previous_border_workday_intraday_rs
 from rs_workdays import get_near_workday_intraday_rs
 from rs_workdays import add_workday_intraday_datetime_rs, sub_workday_intraday_datetime_rs, get_timedelta_workdays_intraday_rs
 
-from develops import option  # 必須
+from .option import option  # 必須
 
 
 def get_timezone_from_datetime(*arg_datetimes):
@@ -179,7 +179,7 @@ def add_workday_intraday_datetime(select_datetime, delta_time):
     added_datetime = datetime.datetime.strptime(added_datetime_str, "%Y-%m-%d %H:%M:%S")
     
     if select_timezone is not None:
-        added_datetime = select_timezone.localize(added_datetime_str)  
+        added_datetime = select_timezone.localize(added_datetime)  
         
     return added_datetime
 
@@ -207,7 +207,7 @@ def sub_workday_intraday_datetime(select_datetime, delta_time):
     subed_datetime = datetime.datetime.strptime(subed_datetime_str, "%Y-%m-%d %H:%M:%S")
     
     if select_timezone is not None:
-        subed_datetime = select_timezone.localize(subed_datetime_str)  
+        subed_datetime = select_timezone.localize(subed_datetime)  
         
     return subed_datetime
 

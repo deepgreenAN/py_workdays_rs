@@ -11,13 +11,13 @@ pub fn extract_workdays_bool_vec(datetime_vec:&Vec<NaiveDateTime>) -> Vec<bool> 
     let workdays_vec = get_workdays(first_date, last_date, "both");
     let mut workdays_iter = workdays_vec.iter();
 
-    let mut one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);
+    let mut one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);
     let mut now_date = first_date;
     let mut is_end_today = false;
 
     // 最初はここで判定
     if one_workday==&now_date {  // その日が営業日の場合
-        one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);  // onw_workdayをインクリメント
+        one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);  // onw_workdayをインクリメント
     } else {  // その日が営業日でない場合
         is_end_today = true; // その日が終了
     }
@@ -29,7 +29,7 @@ pub fn extract_workdays_bool_vec(datetime_vec:&Vec<NaiveDateTime>) -> Vec<bool> 
             now_date = date;
             if one_workday==&now_date {  // その日が営業日の場合
                 is_end_today = false; // フラッグを初期化                
-                one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);  // onw_workdayをインクリメント
+                one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);  // onw_workdayをインクリメント
 
             } else {  // その日が営業日でない場合
                 is_end_today = true; // その日が終了
@@ -110,7 +110,7 @@ pub fn extract_workdays_intraday_bool_vec(datetime_vec:&Vec<NaiveDateTime>) -> V
     let workdays_vec = get_workdays(first_date, last_date, "both");
     let mut workdays_iter = workdays_vec.iter();
 
-    let mut one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);
+    let mut one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);
     let mut now_date = first_date;
 
     let intraday_borders_vec = INTRADAY_BORDERS.read().unwrap();
@@ -121,7 +121,7 @@ pub fn extract_workdays_intraday_bool_vec(datetime_vec:&Vec<NaiveDateTime>) -> V
 
     // 最初はここで判定
     if one_workday==&now_date {  // その日が営業日の場合
-        one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);  // onw_workdayをインクリメント
+        one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);  // onw_workdayをインクリメント
     } else {  // その日が営業日でない場合
         is_end_today = true; // その日が終了
     }
@@ -134,7 +134,7 @@ pub fn extract_workdays_intraday_bool_vec(datetime_vec:&Vec<NaiveDateTime>) -> V
             now_date = date;
             if one_workday==&now_date {  // その日が営業日の場合
                 is_end_today = false; // フラッグを初期化                
-                one_workday = workdays_iter.next().unwrap_or(&*DEFAULT_DATE_1);  // onw_workdayをインクリメント
+                one_workday = workdays_iter.next().unwrap_or(&DEFAULT_DATE_1);  // onw_workdayをインクリメント
 
             } else {  // その日が営業日でない場合
                 is_end_today = true; // その日が終了

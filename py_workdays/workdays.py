@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 import sys
-sys.path.append("E:/py_workdays_rs/py_workdays/rs_workdays/target/release")
+sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import check_workday_rs 
 from rs_workdays import get_next_workday_rs, get_previous_workday_rs, get_near_workday_rs
@@ -150,12 +150,18 @@ def get_workdays_number(start_date, days):
     if days > 0:
         start_date = start_date
         end_date = get_next_workday(start_date, days)
-        return get_workdays(start_date, end_date, closed=None)
+        if check_workday(start_date):  # start_dateを含める
+            return get_workdays(start_date, end_date, closed="left")
+        else:
+            return get_workdays(start_date, end_date, closed=None)
     
     elif days < 0:
         end_date = start_date
         start_date = get_previous_workday(end_date, abs(days))
-        return get_workdays(end_date, start_date, closed=None)[::-1]
+        if check_workday(end_date):  # end_dateを含める
+            return get_workdays(end_date, start_date, closed="right")[::-1]
+        else:
+            return get_workdays(end_date, start_date, closed=None)[::-1]
     
     else :
         raise Exception("days must not be 0")

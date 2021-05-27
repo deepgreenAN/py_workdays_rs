@@ -87,7 +87,7 @@ pub fn get_previous_border_workday_intraday(select_datetime: NaiveDateTime, forc
                     return (out_datetime, "border_start");
                 }
             }
-            let smaller_border_ends: Vec<NaiveTime> = border_ends.iter().cloned().filter(|x|{x<&select_time}).collect();
+            let smaller_border_ends: Vec<NaiveTime> = border_ends.iter().cloned().filter(|x|{x<=&select_time}).collect();
             if smaller_border_ends.len() > 0 {  // 指定時間より早い営業時間の終了ボーダーがある場合
                 let out_time: NaiveTime = smaller_border_ends.iter().cloned().max().unwrap();
                 let out_datetime: NaiveDateTime = select_date.and_time(out_time);
