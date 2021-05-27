@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import datetime
 
-import sys
+#import sys
 #sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import extract_workdays_bool_numpy_rs, extract_intraday_bool_numpy_rs

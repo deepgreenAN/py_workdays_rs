@@ -2,8 +2,8 @@ import datetime
 import numpy as np
 import pandas as pd
 
-import sys
-sys.path.append("py_workdays/rs_workdays/target/release")
+#import sys
+#sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import check_workday_rs 
 from rs_workdays import get_next_workday_rs, get_previous_workday_rs, get_near_workday_rs

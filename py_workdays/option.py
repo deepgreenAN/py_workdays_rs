@@ -5,7 +5,7 @@ import datetime
 
 from py_strict_list import StructureStrictList, strict_list_property
 
-import sys
+#import sys
 #sys.path.append("py_workdays/rs_workdays/target/release")
 from rs_workdays import set_range_holidays_rs, set_one_holiday_weekday_set_rs, set_intraday_borders_rs
 

@@ -5,7 +5,7 @@ import datetime
 from datetime import timedelta
 from pytz import timezone
 
-import sys
+#import sys
 #sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import check_workday_intraday_rs, get_next_border_workday_intraday_rs, get_previous_border_workday_intraday_rs
