@@ -15,7 +15,7 @@ pip install maturin
 maturinでwheelファイルをビルド
 ```
 cd py_workdays/rs_workdays
-matrin build
+maturin build
 ```
 このとき`maturin build`のパラメータ―でPythonインタープリターのパスの指定が必要になることがある．
 rustパッケージのインストール
@@ -25,6 +25,7 @@ pip install target/wheels/***.whl
 py_workdaysのインストール
 ```
 cd ../..
+pip install -r requirements.txt
 python setup.py install
 ```
 （テスト）
