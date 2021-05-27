@@ -1,0 +1,19 @@
+# pythonの不要部分
+__pycache__/
+*.py[cod]
+
+# jupyterの不要部分
+.ipynb_checkpoints/
+Untitled[1-9].ipynb
+Untitled.ipynb
+
+# その他
+.vscode/
+build/
+dist/
+py_workdays.egg-info/
+src/
+py_workdays/source/
+develops/
+develops_test/
+temp/
