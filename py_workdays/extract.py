@@ -4,11 +4,11 @@ import pandas as pd
 import datetime
 
 import sys
-sys.path.append("py_workdays/rs_workdays/target/release")
+#sys.path.append("py_workdays/rs_workdays/target/release")
 
 from rs_workdays import extract_workdays_bool_numpy_rs, extract_intraday_bool_numpy_rs
 from rs_workdays import extract_workdays_intraday_bool_numpy_rs
-from .option import option
+#from .option import option
 
 
 def extract_workdays_index(dt_index, return_as="index"):

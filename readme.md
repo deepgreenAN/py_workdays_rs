@@ -1,5 +1,5 @@
 # 営業日・営業時間のデータを取得・抽出
-営業日のデータを取得，pandas.DataFrameから営業日・営業時間のデータを抽出できる．計算にrustを用いており[高速](https://github.com/deepgreenAN/py_workdays_rs/wiki/%E9%80%9F%E5%BA%A6%E3%82%92%E8%A8%88%E6%B8%AC)．rustコンパイラが必要となる．
+営業日のデータを取得，pandas.DataFrameから営業日・営業時間のデータを抽出できる．計算にrustを用いており[高速](https://github.com/deepgreenAN/py_workdays_rs/wiki/%E9%80%9F%E5%BA%A6%E3%82%92%E8%A8%88%E6%B8%AC)．
 ## requirements
 - pytz
 - pandas
@@ -8,6 +8,29 @@
 - [py_strict_list](https://github.com/deepgreenAN/py_strict_list)
 
 ## installation
+rustのパッケージをインストールするために[maturin](https://github.com/PyO3/maturin)をインストール
+```
+pip install maturin
+```
+maturinでwheelファイルをビルド
+```
+cd py_workdays/rs_workdays
+matrin build
+```
+このとき`maturin build`のパラメータ―でPythonインタープリターのパスの指定が必要になることがある．
+rustパッケージのインストール
+```
+pip install target/wheels/***.whl
+```
+py_workdaysのインストール
+```
+cd ../..
+python setup.py install
+```
+（テスト）
+```
+python -m unittest discover
+```
 そのディレクトリでないどこか別のディレクトリに移動して
 ```
 python
@@ -27,22 +50,22 @@ array([datetime.date(2021, 8, 9), datetime.date(2021, 9, 20),
 ## 使い方
 
 ```python
-from develops import get_workdays, check_workday, get_next_workday, get_workdays_number
+from py_workdays import get_workdays, check_workday, get_next_workday, get_workdays_number
 ```
 
 
 ```python
-from develops import check_workday_intraday, get_next_border_workday_intraday, add_workday_intraday_datetime, get_timedelta_workdays_intraday
+from py_workdays import check_workday_intraday, get_next_border_workday_intraday, add_workday_intraday_datetime, get_timedelta_workdays_intraday
 ```
 
 
 ```python
-from develops import extract_workdays_intraday
+from py_workdays import extract_workdays_intraday
 ```
 
 
 ```python
-from develops import option
+from py_workdays import option
 ```
 
 ##  指定期間の営業日を取得

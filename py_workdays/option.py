@@ -6,11 +6,11 @@ import datetime
 from py_strict_list import StructureStrictList, strict_list_property
 
 import sys
-sys.path.append("py_workdays/rs_workdays/target/release")
+#sys.path.append("py_workdays/rs_workdays/target/release")
 from rs_workdays import set_range_holidays_rs, set_one_holiday_weekday_set_rs, set_intraday_borders_rs
 
-from py_workdays.scraping import all_make_source
-#from .scraping import all_make_source
+#from py_workdays.scraping import all_make_source
+from .scraping import all_make_source
 
 
 class CSVHolidayGetter:
@@ -109,8 +109,8 @@ class Option():
         self._holiday_end_year = datetime.datetime.now().year
         
         self._backend = "csv"
-        self._csv_source_paths = StructureStrictList(Path("py_workdays/source/holiday_naikaku.csv"))
-        #self._csv_source_paths = StructureStrictList(Path(__file__).parent / Path("source/holiday_naikaku.csv"))
+        #self._csv_source_paths = StructureStrictList(Path("py_workdays/source/holiday_naikaku.csv"))
+        self._csv_source_paths = StructureStrictList(Path(__file__).parent / Path("source/holiday_naikaku.csv"))
         self._csv_source_paths.hook_func.add(self.set_holidays)
         
         self._holiday_weekdays = StructureStrictList(5,6)  # 土曜日・日曜日

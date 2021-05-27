@@ -8,7 +8,7 @@ sys.path.append("py_workdays/rs_workdays/target/release")
 from rs_workdays import check_workday_rs 
 from rs_workdays import get_next_workday_rs, get_previous_workday_rs, get_near_workday_rs
 from rs_workdays import extract_workdays_bool_numpy_rs
-from .option import option
+#from .option import option
 
 
 def get_workdays(start_date, end_date, closed="left"):
