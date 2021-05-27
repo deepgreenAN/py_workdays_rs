@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 use chrono::{NaiveDate, Weekday, NaiveTime};
+use num_traits::cast::FromPrimitive;
 use lazy_static::lazy_static;
 use std::error::Error;
 use std::sync::RwLock;
@@ -49,13 +50,10 @@ lazy_static! {
 
 pub fn set_range_holidays(holidays_vec: Vec<NaiveDate>, start_year: i32, end_year: i32) {
     let mut range_holidays_vec = RANGE_HOLIDAYS_VEC.write().unwrap();
-    let initial_length = range_holidays_vec.len();
     // 削除
-    for _ in 0..initial_length {
-        range_holidays_vec.pop();
-    }
+    range_holidays_vec.clear();
 
-    assert_eq!(range_holidays_vec.len(), 0);
+    assert!(range_holidays_vec.is_empty());
 
     // 代入
     let start_date = NaiveDate::from_ymd(start_year, 1, 1);
@@ -67,3 +65,41 @@ pub fn set_range_holidays(holidays_vec: Vec<NaiveDate>, start_year: i32, end_yea
     }
 }
 
+pub fn set_one_holiday_weekday_set(py_one_holiday_weekday_set:Vec<i64>) {
+    let mut one_holiday_weekday_set = ONE_HOLIDAY_WEEKDAY_SET.write().unwrap();
+    // 削除
+    one_holiday_weekday_set.clear();
+
+    assert!(one_holiday_weekday_set.is_empty());
+
+    // 代入
+    for one_holiday_weekday_int in py_one_holiday_weekday_set.iter() {
+        one_holiday_weekday_set.insert(Weekday::from_i64(*one_holiday_weekday_int).unwrap());
+    }
+}
+
+pub fn set_intraday_borders(py_intraday_borders:Vec<Vec<Vec<u32>>>) {
+    let mut intraday_borders = INTRADAY_BORDERS.write().unwrap();
+
+    // 削除
+    intraday_borders.clear();
+
+    assert!(intraday_borders.is_empty());
+
+    // 代入
+    for one_intraday_border in py_intraday_borders.iter(){
+        let time_border = TimeBorder{
+            start:NaiveTime::from_hms(
+                one_intraday_border[0][0],
+                one_intraday_border[0][1],
+                one_intraday_border[0][2]
+            ),
+            end:NaiveTime::from_hms(
+                one_intraday_border[1][0], 
+                one_intraday_border[1][1], 
+                one_intraday_border[1][2]
+            )
+        };
+        intraday_borders.push(time_border);
+    }
+}

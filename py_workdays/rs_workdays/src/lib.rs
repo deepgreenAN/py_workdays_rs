@@ -10,7 +10,7 @@ pub mod workdays;
 pub mod intraday;
 pub mod extract;
 
-use global::{set_range_holidays};
+use global::{set_range_holidays, set_one_holiday_weekday_set, set_intraday_borders};
 
 use workdays::{get_workdays, check_workday, get_next_workday, get_previous_workday, get_near_workday};
 use workdays::{get_workdays_number};
@@ -27,6 +27,17 @@ fn set_range_holidays_rs(date_str_vec:Vec<String>, start_year:i32, end_year:i32)
     Ok(())
 }
 
+#[pyfunction]
+fn set_one_holiday_weekday_set_rs(py_one_holiday_weekday_set:Vec<i64>) -> PyResult<()> {
+    set_one_holiday_weekday_set(py_one_holiday_weekday_set);
+    Ok(())
+}
+
+#[pyfunction]
+fn set_intraday_borders_rs(py_intraday_borders:Vec<Vec<Vec<u32>>>) -> PyResult<()> {
+    set_intraday_borders(py_intraday_borders);
+    Ok(())
+}
 
 #[pyfunction]
 fn get_workdays_rs(start_date_str:String, end_date_str:String, closed:String) -> PyResult<Vec<String>> {
@@ -134,6 +145,8 @@ fn get_timedelta_workdays_intraday_rs(start_datetime_str:String, end_datetime_st
 #[pymodule]
 fn rs_workdays(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!( set_range_holidays_rs ))?;
+    m.add_wrapped(wrap_pyfunction!( set_one_holiday_weekday_set_rs ))?;
+    m.add_wrapped(wrap_pyfunction!( set_intraday_borders_rs ))?;
 
     // workdays
     m.add_wrapped(wrap_pyfunction!( get_workdays_rs ))?;
