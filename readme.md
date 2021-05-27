@@ -17,7 +17,7 @@ maturinでwheelファイルをビルド
 cd py_workdays/rs_workdays
 maturin build
 ```
-このとき`maturin build`のパラメータ―でPythonインタープリターのパスの指定が必要になることがある．
+このとき`maturin build`のパラメータ―でPythonインタープリターのパスの指定が必要になることがある．  
 rustパッケージのインストール
 ```
 pip install target/wheels/***.whl
