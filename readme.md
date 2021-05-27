@@ -18,7 +18,7 @@ cd py_workdays/rs_workdays
 maturin build
 ```
 このとき`maturin build`のパラメータ―でPythonインタープリターのパスの指定が必要になることがある．  
-rustパッケージのインストール
+rustパッケージのインストール(実際のファイル名が入る)
 ```
 pip install target/wheels/***.whl
 ```
