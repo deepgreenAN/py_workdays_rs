@@ -1,0 +1,1 @@
+rm ./py_workdays/rs_workdays/target/wheels/*.whl

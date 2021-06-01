@@ -4,11 +4,11 @@ import pandas as pd
 import datetime
 import time
 import io
-import jpholiday
-import numpy as np
+
+from typing import Dict, List
 
 
-def make_source_with_naikaku(source_path):
+def make_source_with_naikaku(source_path: Path) -> None:
     """
     内閣府のサイトから得られるデータ(https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv)
     を適切なフォーマット(header, indexの無い日にち，祝日名)に変換して引数のソースディレクトリに保存する関数．
@@ -30,13 +30,13 @@ def make_source_with_naikaku(source_path):
     holiday_df_csv.to_csv(source_path, header=False)
 
 
-def make_source_with_api(source_path):
+def make_source_with_api(source_path: Path) -> None:
     """
     日本の祝日API(https://holidays-jp.github.io/)を用いて取得したデータを
     適切なフォーマット(header, indexの無い日にち，祝日名)に変換して引数のソースディレクトリに保存する関数．
     振替休日は振替元も同時に表示される．2015年からの祝日であることに注意
     """
-    date_holidayname = {"date":[], "holiday_name":[]}
+    date_holidayname:Dict[str, List[str]] = {"date":[], "holiday_name":[]}
 
     for year in range(2015, datetime.datetime.now().year+1):
         url = "https://holidays-jp.github.io/api/v1/{}/date.json".format(year)
@@ -51,25 +51,7 @@ def make_source_with_api(source_path):
     holiday_df_api.to_csv(source_path, index=False, header=False)
 
 
-def make_source_with_jpholiday(source_path):
-    """
-    jpholiday(https://pypi.org/project/jpholiday/)を用いて取得したデータを
-    適切なフォーマット(header, indexの無い日にち，祝日名)に変換して引数のソースディレクトリに保存する関数．
-    振替休日は振替元も同時に表示される．1955年からの祝日であることに注意
-    """ 
-    start_date = datetime.date(1955,1,1)
-    end_date = datetime.date(datetime.datetime.now().year+1,12,31)
-    holidays_array = np.array(jpholiday.between(start_date, end_date))
-    
-    holiday_df_jpholiday = pd.DataFrame(holidays_array[:,1,None], 
-                          columns=["holiday_name"],
-                          index=pd.DatetimeIndex(holidays_array[:,0])
-                         )
-    holiday_df_jpholiday.index.name = "date"
-    holiday_df_jpholiday.to_csv(source_path, header=False)
-
-
-def make_souce_dir():
+def make_souce_dir() -> None:
     """
     sourceディレクトリを作成
     """
@@ -77,7 +59,7 @@ def make_souce_dir():
     if not source_path.exists():
         source_path.mkdir()
 
-def all_make_source():
+def all_make_source() -> None:
     """
     3つの方法でcsvファイルを取得
     """
@@ -86,8 +68,6 @@ def all_make_source():
     make_source_with_naikaku(naikaku_source_path)
     api_source_path = Path(__file__).parent.parent / Path("source/holiday_api.csv")
     make_source_with_api(api_source_path)
-    jpholiday_source_path = Path(__file__).parent.parent / Path("source/holiday_jpholiday.csv")
-    make_source_with_jpholiday(jpholiday_source_path)
 
 
 if __name__ == "__main__":

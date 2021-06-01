@@ -5,6 +5,7 @@ from datetime import timedelta
 import pandas as pd
 from pathlib import Path
 from pytz import timezone
+from typing import NoReturn
 
 from py_workdays import get_workdays, get_not_workdays
 from py_workdays import check_workday, get_next_workday, get_previous_workday, get_workdays_number, get_near_workday
@@ -14,7 +15,7 @@ from py_workdays import add_workday_intraday_datetime, sub_workday_intraday_date
 from py_workdays import option
 
 
-def true_holidays_2021():
+def true_holidays_2021() -> np.ndarray:
     holidays_list = [datetime.date(2021,1,1),
                      datetime.date(2021,1,11),
                      datetime.date(2021,2,11),
@@ -39,14 +40,14 @@ def true_holidays_2021():
 
 class TestWorkdays(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         option.holiday_start_year = 2021
         option.holiday_weekdays = [5,6]
         option.intraday_borders = [[datetime.time(9,0), datetime.time(11,30)],
                                    [datetime.time(12,30), datetime.time(15,0)]]
         
         
-    def test_related_workdays(self):
+    def test_related_workdays(self) -> None:
         # get_workdays, get_not_workdays
         all_date = pd.date_range(datetime.date(2021,1,1), datetime.date(2021,12,31), freq="D").date
         all_weekdays = np.array([item.weekday() for item in all_date])
@@ -104,7 +105,7 @@ class TestWorkdays(unittest.TestCase):
         near_workday = get_near_workday(datetime.date(2021,1,1), is_after=False)
         self.assertEqual(near_workday, datetime.date(2020,12,31))
         
-    def test_related_extract(self):
+    def test_related_extract(self) -> None:
         all_date = pd.date_range(datetime.date(2021,1,1), datetime.date(2021,12,31), freq="D").date
         all_weekdays = np.array([item.weekday() for item in all_date])
         
@@ -134,7 +135,7 @@ class TestWorkdays(unittest.TestCase):
         self.assertFalse(np.any(np.in1d(extracted_df.index.date, true_not_workdays)))
         self.assertEqual(len(extracted_df.at_time(datetime.time(8,0)).index),0)
     
-    def test_related_datetime_raw(self):        
+    def test_related_datetime_raw(self) -> None:        
         # check_workday_intraday
         self.assertTrue(check_workday_intraday(datetime.datetime(2021,1,4,10,0,0)))
         self.assertFalse(check_workday_intraday(datetime.datetime(2021,1,1,10,0,0)))
@@ -166,7 +167,7 @@ class TestWorkdays(unittest.TestCase):
                 
         # add_workday_intraday_datetime
         datetime_range = pd.date_range(start=datetime.datetime(2021,1,1,0,0,0), end=datetime.datetime(2021,2,1,0,0,0), closed="left", freq="5T")
-        extracted_datetime_range = extract_workdays_intraday_index(datetime_range)
+        extracted_datetime_range: pd.DatetimeIndex = extract_workdays_intraday_index(datetime_range)
         extracted_datetime_range_array = extracted_datetime_range.to_pydatetime()
         
         datetime_list = [datetime.datetime(2021, 1, 4, 9, 0)]
@@ -213,7 +214,7 @@ class TestWorkdays(unittest.TestCase):
         delta_time = get_timedelta_workdays_intraday(start_datetime, end_datetime)
         self.assertEqual(datetime.datetime(2021,1,4,9,0,0), sub_workday_intraday_datetime(end_datetime, delta_time))
         
-    def test_related_datetime_jst(self):
+    def test_related_datetime_jst(self) -> None:
         jst = timezone("Asia/Tokyo")
         
         # check_workday_intraday
@@ -247,7 +248,7 @@ class TestWorkdays(unittest.TestCase):
                 
         # add_workday_intraday_datetime
         datetime_range = pd.date_range(start=jst.localize(datetime.datetime(2021,1,1,0,0,0)), end=jst.localize(datetime.datetime(2021,2,1,0,0,0)), closed="left", freq="5T")
-        extracted_datetime_range = extract_workdays_intraday_index(datetime_range)
+        extracted_datetime_range: pd.DatetimeIndex = extract_workdays_intraday_index(datetime_range)
         extracted_datetime_range_array = extracted_datetime_range.to_pydatetime()
         
         datetime_list = [jst.localize(datetime.datetime(2021, 1, 4, 9, 0))]
@@ -296,13 +297,13 @@ class TestWorkdays(unittest.TestCase):
 
 
 class TestOption(unittest.TestCase):
-    def test_make_workdays(self):
+    def test_make_workdays(self) -> None:
         #optionを設定するだけで休日が更新される．
         option.holiday_start_year = 2021
         option.holiday_end_year = 2021
         self.assertTrue(np.array_equal(option.holidays_date_array, true_holidays_2021()))
         
-    def test_append_source_path(self):
+    def test_append_source_path(self) -> None:
         option.backend = "csv"
         temp_source_path = Path("py_workdays/source/temp.csv")
         # 存在しない祝日を記したcsvファイルを追加

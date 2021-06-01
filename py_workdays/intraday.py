@@ -4,6 +4,7 @@ import pandas as pd
 import datetime
 from datetime import timedelta
 from pytz import timezone
+from typing import List, Optional, Tuple, Any
 
 #import sys
 #sys.path.append("py_workdays/rs_workdays/target/release")
@@ -15,13 +16,13 @@ from rs_workdays import add_workday_intraday_datetime_rs, sub_workday_intraday_d
 #from .option import option  # 必須
 
 
-def get_timezone_from_datetime(*arg_datetimes):
+def get_timezone_from_datetime(*arg_datetimes:datetime.datetime) -> Any:
     """
     awareなdatetimeのtimezoneを取得するnaiveの場合Noneが返る
     arg_datetime: *datetime
         timezoneを取得したいdatetime
     """
-    timezone_str_list = []
+    timezone_str_list: List[Optional[str]] = []
     for one_datetime in arg_datetimes:
         if one_datetime.tzinfo is not None:
             timezone_str_list.append(str(one_datetime.tzinfo))
@@ -39,7 +40,7 @@ def get_timezone_from_datetime(*arg_datetimes):
         return None
 
 
-def check_workday_intraday(select_datetime):
+def check_workday_intraday(select_datetime: datetime.datetime) -> bool:
     """
     与えられたdatetime.datetimeが営業日・営業時間内であるかどうかを出力する
     select_datetime: datetime.datetime
@@ -55,7 +56,7 @@ def check_workday_intraday(select_datetime):
     return check_workday_intraday_rs(select_datetime_str)
 
 
-def get_next_border_workday_intraday(select_datetime):
+def get_next_border_workday_intraday(select_datetime: datetime.datetime) -> Tuple[datetime.datetime, str]:
     """
     引数のdatetime.datetimeに最も近い後の営業時間を境界シンボルと共に返す
     Paremeters
@@ -87,7 +88,7 @@ def get_next_border_workday_intraday(select_datetime):
     return (next_datetime, next_symbol)
 
 
-def get_previous_border_workday_intraday(select_datetime, force_is_end=False):
+def get_previous_border_workday_intraday(select_datetime: datetime.datetime, force_is_end: bool=False) -> Tuple[datetime.datetime, str]:
     """
     引数のdatetime.datetimeに最も近い前の営業時間を境界シンボルと共に返す
     Paremeters
@@ -121,7 +122,7 @@ def get_previous_border_workday_intraday(select_datetime, force_is_end=False):
     return (previous_datetime, previous_symbol)
 
 
-def get_near_workday_intraday(select_datetime, is_after=True):
+def get_near_workday_intraday(select_datetime: datetime.datetime, is_after: bool=True) -> Tuple[datetime.datetime, str]:
     """
     引数のdatetime.datetimeが営業日・営業時間の場合はそのまま，そうでない場合は最も近い境界を境界シンボルとともに返す．
     Paremeters
@@ -156,7 +157,7 @@ def get_near_workday_intraday(select_datetime, is_after=True):
     return (near_datetime, near_symbol)
 
 
-def add_workday_intraday_datetime(select_datetime, delta_time):
+def add_workday_intraday_datetime(select_datetime: datetime.datetime, delta_time: timedelta) -> datetime.datetime:
     """
     営業日・営業時間を考慮しdatetime.datetimeを減らす
     select_datetime: datetime.datetime
@@ -184,7 +185,7 @@ def add_workday_intraday_datetime(select_datetime, delta_time):
     return added_datetime
 
 
-def sub_workday_intraday_datetime(select_datetime, delta_time):
+def sub_workday_intraday_datetime(select_datetime: datetime.datetime, delta_time: timedelta) -> datetime.datetime:
     """
     営業日・営業時間を考慮しdatetime.datetimeを減らす
     select_datetime: datetime.datetime
@@ -212,7 +213,7 @@ def sub_workday_intraday_datetime(select_datetime, delta_time):
     return subed_datetime
 
 
-def get_timedelta_workdays_intraday(start_datetime, end_datetime):
+def get_timedelta_workdays_intraday(start_datetime: datetime.datetime, end_datetime: datetime.datetime) -> timedelta:
     """
     指定期間中の営業日・営業時間をtimedelta(ミリ秒は切り捨て)として出力
     start_datetime: datetime.datetime

@@ -2,6 +2,7 @@ import datetime
 import numpy as np
 import pandas as pd
 import datetime
+from typing import Union, NoReturn
 
 #import sys
 #sys.path.append("py_workdays/rs_workdays/target/release")
@@ -10,8 +11,11 @@ from rs_workdays import extract_workdays_bool_numpy_rs, extract_intraday_bool_nu
 from rs_workdays import extract_workdays_intraday_bool_numpy_rs
 #from .option import option
 
+# typehint
+InputPandas = Union[pd.DataFrame, pd.Series]
+OutputExtract = Union[np.ndarray, pd.DatetimeIndex, pd.DataFrame, pd.Series]
 
-def extract_workdays_index(dt_index, return_as="index"):
+def extract_workdays_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[pd.DatetimeIndex, np.ndarray, NoReturn]:
     """
     pd.DatetimeIndexから，営業日のデータのものを抽出
     dt_index: pd.DatetimeIndex
@@ -40,13 +44,15 @@ def extract_workdays_index(dt_index, return_as="index"):
     
     if return_as=="bool":
         return extracted_bool
-    
     elif return_as=="index":
         extracted_dt_index = dt_index[extracted_bool]
         return extracted_dt_index
+    else: # これは呼ばれない
+        raise Exception("invalid return_as.")
 
 
-def extract_workdays(df, return_as="df"):
+
+def extract_workdays(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，営業日のデータのものを抽出．出力データ形式をreturn_asで指定する．
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)
@@ -76,7 +82,7 @@ def extract_workdays(df, return_as="df"):
         return out_df
 
 
-def extract_intraday_index(dt_index, return_as="index"):
+def extract_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[np.ndarray, pd.DatetimeIndex, NoReturn]:
     """
     pd.DatetimeIndexから，日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
     dt_index: pd.DatetimeIndex
@@ -105,13 +111,14 @@ def extract_intraday_index(dt_index, return_as="index"):
     
     if return_as=="bool":
         return extracted_bool
-    
     elif return_as=="index":
         extracted_dt_index = dt_index[extracted_bool]
         return extracted_dt_index
+    else: # これは呼ばれない
+        raise Exception("invalid return_as.")
 
 
-def extract_intraday(df, return_as="df"):
+def extract_intraday(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)
@@ -141,7 +148,7 @@ def extract_intraday(df, return_as="df"):
         return out_df
 
 
-def extract_workdays_intraday_index(dt_index, return_as="index"):
+def extract_workdays_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[pd.DatetimeIndex, np.ndarray, NoReturn]:
     """
     pd.DatetimeIndexから，営業日+日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
     dt_index: pd.DatetimeIndex
@@ -170,13 +177,14 @@ def extract_workdays_intraday_index(dt_index, return_as="index"):
     
     if return_as=="bool":
         return extracted_bool
-    
     elif return_as=="index":
         extracted_dt_index = dt_index[extracted_bool]
         return extracted_dt_index
+    else: # これは呼ばれない
+        raise Exception("invalid return_as.")
 
 
-def extract_workdays_intraday(df, return_as="df"):
+def extract_workdays_intraday(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，営業日+日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)

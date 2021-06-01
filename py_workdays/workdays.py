@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 import numpy as np
 import pandas as pd
 
@@ -11,7 +12,7 @@ from rs_workdays import extract_workdays_bool_numpy_rs
 #from .option import option
 
 
-def get_workdays(start_date, end_date, closed="left"):
+def get_workdays(start_date: datetime.date, end_date: datetime.date, closed: Optional[str]="left") -> np.ndarray:
     """
     営業日を取得
     
@@ -34,12 +35,12 @@ def get_workdays(start_date, end_date, closed="left"):
         
     all_date = pd.date_range(start_date, end_date, freq="D", closed=closed)
     all_date_datetime64 = (all_date.values.astype(np.int64) / 1.e9).astype(np.int64)
-    date_array = all_date.date[extract_workdays_bool_numpy_rs(all_date_datetime64)].copy()
+    date_array = all_date[extract_workdays_bool_numpy_rs(all_date_datetime64)].date.copy()
     
     return date_array
 
 
-def get_not_workdays(start_date, end_date, closed="left"):
+def get_not_workdays(start_date: datetime.date, end_date: datetime.date, closed: Optional[str]="left") -> np.ndarray:
     """
     非営業日を取得(休日曜日or祝日)
     
@@ -62,12 +63,12 @@ def get_not_workdays(start_date, end_date, closed="left"):
         
     all_date = pd.date_range(start_date, end_date, freq="D", closed=closed)
     all_date_datetime64 = (all_date.values.astype(np.int64) / 1.e9).astype(np.int64)
-    date_array = all_date.date[~extract_workdays_bool_numpy_rs(all_date_datetime64)].copy()
+    date_array = all_date[~extract_workdays_bool_numpy_rs(all_date_datetime64)].date.copy()
     
     return date_array
 
 
-def check_workday(select_date):
+def check_workday(select_date: datetime.date) -> bool:
     """
     与えられたdatetime.dateが営業日であるかどうかを出力する
     select_date: datetime.date
@@ -80,7 +81,7 @@ def check_workday(select_date):
     return check_workday_rs(select_date_str)
 
 
-def get_next_workday(select_date, days=1):
+def get_next_workday(select_date: datetime.date, days: int=1) -> datetime.date:
     """
     指定した日数後の営業日を取得
     select_date: datetime.date
@@ -98,7 +99,7 @@ def get_next_workday(select_date, days=1):
     return next_date
 
 
-def get_previous_workday(select_date, days=1):
+def get_previous_workday(select_date: datetime.date, days: int=1) -> datetime.date:
     """
     指定した日数前の営業日を取得
     select_date: datetime.date
@@ -116,7 +117,7 @@ def get_previous_workday(select_date, days=1):
     return previous_date
 
 
-def get_near_workday(select_date, is_after=True):
+def get_near_workday(select_date: datetime.date, is_after: bool=True) -> datetime.date:
     """
     引数の最近の営業日を取得
     select_date: datetime.date
@@ -135,7 +136,7 @@ def get_near_workday(select_date, is_after=True):
     return near_date
 
 
-def get_workdays_number(start_date, days):
+def get_workdays_number(start_date: datetime.date, days: int) -> np.ndarray:
     """
     指定した日数分の営業日を取得
     start_date: datetime.date

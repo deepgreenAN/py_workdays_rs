@@ -354,7 +354,7 @@ print(option.intraday_borders)
 
 ### Optionの変更 
 
-下の例では代入しているが，リストの場合はappendでもよい．値の型を間違えるとエラーが出る．optionの値を初期化したいときは`option.__init__()`を呼べばよい．
+下の例では代入しているが，リストの場合はappendでもよい．値の型を間違えるとエラーが出る．optionの値を初期化したいときは`option.__init__()`か`option.initialize()`を呼べばよい．
 
 
 ```python
