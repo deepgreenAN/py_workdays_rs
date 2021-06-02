@@ -24,6 +24,9 @@ class CSVHolidayGetter:
     def get_holidays(self, start_date:datetime.date, end_date:datetime.date, with_name:bool=False) -> np.ndarray:
         """
         期間を指定して祝日を取得．csvファイルを利用して祝日を取得している．
+
+        Parameters
+        ----------
         start_date: datetime.date
             開始時刻のdate
         end_datetime: datetime.date
@@ -32,6 +35,11 @@ class CSVHolidayGetter:
             休日の名前を出力するかどうか
         to_date: bool
             出力をdatetime.datetimeにするかdatetime.dateにするか
+
+        Returns
+        -------
+        holiday_in_span_array: np.ndarray(dtype=object)
+            営業日のndarray
         """
         assert isinstance(start_date, datetime.date) and isinstance(end_date, datetime.date)
         assert not isinstance(start_date, datetime.datetime) and not isinstance(end_date, datetime.datetime)
@@ -92,12 +100,9 @@ class CSVHolidayGetter:
 class Option():
     """
     オプションの指定のためのクラス
-    holiday_start_year: int
-        利用する休日の開始年
-    holiday_end_year: int
-        利用する休日の終了年
-    backend: str
-        休日取得のバックエンド．csvかjpholidayのいずれかが選べる
+        
+    Attributes
+    ----------
     csv_source_paths: list of str or pathlib.Path
         バックエンドをcsvにした場合の休日のソースcsvファイル
     holiday_weekdays: list of int
@@ -109,35 +114,41 @@ class Option():
         self.initialize()
 
     def initialize(self) -> None:
+        """
+        設定パラメータの初期化
+        """
         self._holiday_start_year: int = datetime.datetime.now().year-5
         self._holiday_end_year: int = datetime.datetime.now().year
         
         self._backend: str = "csv"
-        #self._csv_source_paths = StructureStrictList(Path("py_workdays/source/holiday_naikaku.csv"))
-        self._csv_source_paths = StructureStrictList(Path(__file__).parent / Path("source/holiday_naikaku.csv"))
-        self._csv_source_paths.hook_func.add(self.set_holidays)
+        self._csv_source_paths = StructureStrictList(Path("py_workdays/source/holiday_naikaku.csv"))
+        #self._csv_source_paths = StructureStrictList(Path(__file__).parent / Path("source/holiday_naikaku.csv"))
+        self._csv_source_paths.hook_func.add(self._set_holidays)
         
         self._holiday_weekdays = StructureStrictList(5,6)  # 土曜日・日曜日
-        self._holiday_weekdays.hook_func.add(self.set_holiday_weekdays)
+        self._holiday_weekdays.hook_func.add(self._set_holiday_weekdays)
         
         self._intraday_borders = StructureStrictList([datetime.time(9,0), datetime.time(11,30)],
                                   [datetime.time(12,30), datetime.time(15,0)])
-        self._intraday_borders.hook_func.add(self.set_intraday_borders)
+        self._intraday_borders.hook_func.add(self._set_intraday_borders)
         
-        self.make_holiday_getter()  # HolidayGetterを作成
-        self.set_holidays()  # 休日を追加
-        self.set_holiday_weekdays()  # 休日曜日を追加
-        self.set_intraday_borders()  # 営業時間を追加
+        self._make_holiday_getter()  # HolidayGetterを作成
+        self._set_holidays()  # 休日を追加
+        self._set_holiday_weekdays()  # 休日曜日を追加
+        self._set_intraday_borders()  # 営業時間を追加
         
     csv_source_paths = strict_list_property("_csv_source_paths", include_outer_length=False)
     holiday_weekdays = strict_list_property("_holiday_weekdays", include_outer_length=False)
     intraday_borders = strict_list_property("_intraday_borders", include_outer_length=False)
     
-    def make_holiday_getter(self) -> None:
+    def _make_holiday_getter(self) -> None:
+        """
+        holiday_getterのファクトリ
+        """
         if self.backend == "csv":
             self._holiday_getter = CSVHolidayGetter(self.csv_source_paths)
         
-    def set_holidays(self) -> None:
+    def _set_holidays(self) -> None:
         """
         利用する休日のarrayとDatetimeIndexをアトリビュートとして作成．csv_pathを追加したときにも呼ぶ
         """
@@ -149,12 +160,18 @@ class Option():
         
         set_range_holidays_rs(holidays_date_str_array.tolist(), self._holiday_start_year, self._holiday_end_year)
         
-    def set_holiday_weekdays(self) -> None:
+    def _set_holiday_weekdays(self) -> None:
+        """
+        holiday_weekdaysの登録
+        """
         holiday_weekdays_list = list(self._holiday_weekdays)
         set_one_holiday_weekday_set_rs(holiday_weekdays_list)
 
             
-    def set_intraday_borders(self) -> None:
+    def _set_intraday_borders(self) -> None:
+        """
+        intraday_bordersの登録
+        """
         # 開始時刻でソート todo
         # 重なりが無いかチェック todo
         
@@ -173,26 +190,35 @@ class Option():
         
     @property
     def holiday_start_year(self) -> int:
+        """
+        利用する休日の開始年
+        """
         return self._holiday_start_year
     
     @holiday_start_year.setter
     def holiday_start_year(self, year:int) -> None:
         assert isinstance(year,int)
         self._holiday_start_year = year
-        self.set_holidays()  # 休日の追加
+        self._set_holidays()  # 休日の設定
     
     @property
     def holiday_end_year(self) -> int:
+        """
+        利用する休日の終了年
+        """
         return self._holiday_end_year
 
     @holiday_end_year.setter
     def holiday_end_year(self, year:int) -> None:
         assert isinstance(year,int)
         self._holiday_end_year = year
-        self.set_holidays() # 休日の追加
+        self._set_holidays()  # 休日の設定
     
     @property
     def backend(self) -> str:
+        """
+        休日取得のバックエンド
+        """
         return self._backend
     
     @backend.setter
@@ -201,11 +227,14 @@ class Option():
         if backend_str not in back_end_set:
             raise Exception("backend must be in {}".format(back_end_set))
         self._backend = backend_str
-        self.make_holiday_getter()  # HolidayGetterを作成
-        self.set_holidays() # 休日の追加
+        self._make_holiday_getter()  # HolidayGetterを作成
+        self._set_holidays()  # 休日の設定
     
     @property
     def holidays_date_array(self) -> np.ndarray:
+        """
+        利用できる休日のndarray
+        """
         return self._holidays_date_array
 
 

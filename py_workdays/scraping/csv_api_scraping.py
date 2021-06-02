@@ -13,6 +13,11 @@ def make_source_with_naikaku(source_path: Path) -> None:
     内閣府のサイトから得られるデータ(https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv)
     を適切なフォーマット(header, indexの無い日にち，祝日名)に変換して引数のソースディレクトリに保存する関数．
     振替休日は休日と表記される．1955年からのデータであることに注意
+
+    Parameters
+    ----------
+    source_path: pathlib.Path
+        作成するcsvファイルのパス
     """
     url = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv"
     req = requests.get(url)
@@ -35,6 +40,11 @@ def make_source_with_api(source_path: Path) -> None:
     日本の祝日API(https://holidays-jp.github.io/)を用いて取得したデータを
     適切なフォーマット(header, indexの無い日にち，祝日名)に変換して引数のソースディレクトリに保存する関数．
     振替休日は振替元も同時に表示される．2015年からの祝日であることに注意
+
+    Parameters
+    ----------
+    source_path: pathlib.Path
+        作成するcsvファイルのパス
     """
     date_holidayname:Dict[str, List[str]] = {"date":[], "holiday_name":[]}
 

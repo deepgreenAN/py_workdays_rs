@@ -18,12 +18,23 @@ OutputExtract = Union[np.ndarray, pd.DatetimeIndex, pd.DataFrame, pd.Series]
 def extract_workdays_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[pd.DatetimeIndex, np.ndarray, NoReturn]:
     """
     pd.DatetimeIndexから，営業日のデータのものを抽出
+
+    Parameters
+    ----------
     dt_index: pd.DatetimeIndex
         入力するDatetimeIndex，すでにdatetimeでソートしていることが前提
     return_as: str
         出力データの形式
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    extracted_bool: np.ndarray(dtype=bool)
+        営業日を抜き出したブーリアンマスク(return_as=='bool')
+    extracted_dt_index: pd.DatetimeIndex
+        営業日を抜き出したpd.DatetimeIndex(return_as=='index')
+
     """
     
     # 返り値の形式の指定
@@ -55,13 +66,25 @@ def extract_workdays_index(dt_index: pd.DatetimeIndex, return_as: str="index") -
 def extract_workdays(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，営業日のデータのものを抽出．出力データ形式をreturn_asで指定する．
+
+    Parameters
+    ----------
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)
         入力データ
     return_as: str
         出力データの形式
-        - "df": 抽出した新しいpd.DataFrameを返す
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "df": 抽出した新しいpd.DataFrameを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    workdays_bool_array: np.ndarray(dtype=bool)
+        営業日を抜き出したブーリアンマスク(return_as=='bool')
+    workdays_df_indice: pd.DatetimeIndex
+        営業日を抜き出したpd.DatetimeIndex(return_as=='index')
+    out_df: pd.DataFrame
+        営業日を抜き出したpd.DataFrame(return_as=='df')
     """
     
     # 返り値の形式の指定
@@ -85,12 +108,22 @@ def extract_workdays(df: InputPandas, return_as: str="df") -> OutputExtract:
 def extract_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[np.ndarray, pd.DatetimeIndex, NoReturn]:
     """
     pd.DatetimeIndexから，日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
+
+    Parameters
+    ----------
     dt_index: pd.DatetimeIndex
         入力するDatetimeIndex
     return_as: str
         出力データの形式
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    extracted_bool: np.ndarray(dtype=bool)
+        営業時間を抜き出したブーリアンマスク(return_as=='bool')
+    extraceted_dt_index: pd.DatetimeIndex
+        営業時間を抜き出したpd.DatetimeIndex(return_as=='index')
     """
     
     # 返り値の形式の指定
@@ -121,13 +154,25 @@ def extract_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="index") -
 def extract_intraday(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
+
+    Parameters
+    ----------
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)
         入力データ
     return_as: str
         出力データの形式
-        - "df": 抽出した新しいpd.DataFrameを返す
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "df": 抽出した新しいpd.DataFrameを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    intraday_bool_array: np.ndarray(dtype=bool)
+        営業時間を抜き出したブーリアンマスク(return_as=='bool')
+    intraday_indice: pd.DatetimeIndex
+        営業時間を抜き出したpd.DatetimeIndex(return_as=='index')
+    out_df: pd.DataFrame
+        営業時間を抜き出したpd.DataFrame(return_as=='df')
     """
     
     # 返り値の形式の指定
@@ -151,12 +196,36 @@ def extract_intraday(df: InputPandas, return_as: str="df") -> OutputExtract:
 def extract_workdays_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="index") -> Union[pd.DatetimeIndex, np.ndarray, NoReturn]:
     """
     pd.DatetimeIndexから，営業日+日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
+
+    Parameters
+    ----------
     dt_index: pd.DatetimeIndex
         入力するDatetimeIndex
     return_as: str
         出力データの形式
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    extracted_bool: np.ndarray(dtype=bool)
+        営業日・営業時間を抜き出したブーリアンマスク(return_as=='bool')
+    extracted_dt_index: pd.DatetimeIndex
+        営業日・営業時間を抜き出したpd.DatetimeIndex(return_as=='index')
+
+    Examples
+    --------
+    >>> datetime_list = [
+        datetime.datetime(2021,1,1,0,0,0),
+        datetime.datetime(2021,1,1,10,0,0),
+        datetime.datetime(2021,1,4,0,0,0),
+        datetime.datetime(2021,1,4,10,0,0)
+        ]
+    >>> datetime_index = pd.DatetimeIndex(datetime_list)
+    >>> extract_workdays_intraday_index(datetime_index)
+    DatetimeIndex(['2021-01-04 10:00:00'], dtype='datetime64[ns]', freq=None)
+    >>> extract_workdays_intraday_index(datetime_index, return_as="bool")
+    array([False, False, False,  True])
     """
     
     # 返り値の形式の指定
@@ -187,13 +256,25 @@ def extract_workdays_intraday_index(dt_index: pd.DatetimeIndex, return_as: str="
 def extract_workdays_intraday(df: InputPandas, return_as: str="df") -> OutputExtract:
     """
     データフレームから，営業日+日中のデータのものを抽出．出力データ形式をreturn_asで指定する．
+
+    Parameters
+    ----------
     df: pd.DataFrame(インデックスとしてpd.DatetimeIndex)
         入力データ
     return_as: str
         出力データの形式
-        - "df": 抽出した新しいpd.DataFrameを返す
-        - "index": 引数としたdfの対応するインデックスを返す
-        - "bool": 引数としたdfに対応するboolインデックスを返す
+            - "df": 抽出した新しいpd.DataFrameを返す
+            - "index": 引数としたdfの対応するインデックスを返す
+            - "bool": 引数としたdfに対応するboolインデックスを返す
+
+    Returns
+    -------
+    workday_intraday_bool_array: np.ndarray(dtype=bool)
+        営業日・営業時間を抜き出したブーリアンマスク(return_as=='bool')
+    workday_intraday_indice: pd.DatetimeIndex
+        営業日・営業時間を抜き出したpd.DatetimeIndex(return_as=='index')
+    out_df: pd.DataFrame
+        営業日・営業時間を抜き出したpd.DataFrame(return_as=='df')
     """
     
     # 返り値の形式の指定
