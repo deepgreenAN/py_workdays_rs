@@ -1,25 +1,25 @@
 [package]
-name = "rs_workdays"
+name = "py_workdays"
 version = "0.1.0"
 authors = ["deepgreenAN <asami73dgreen63@gmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "rs_workdays"
+name = "py_workdays"
+# crate-type = ["cdylib", "rlib"]
 crate-type = ["cdylib"]
 
 [dependencies]
-csv = "1.1"
 chrono = "0.4"
-lazy_static = "1.4.0"
-numpy = "0.13"
-ndarray = "0.14"
+rs_workdays = {git = "https://github.com/deepgreenAN/rs_workdays.git"}
+numpy = "0.15"
 num-traits = "0.2"
+thiserror = "1.0.0"
+anyhow = "1.0.51"
 
 [dependencies.pyo3]
-version = "0.13.2"
+version = "0.15.1"
 features = ["extension-module"]
 
 

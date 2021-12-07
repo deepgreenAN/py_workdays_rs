@@ -7,8 +7,12 @@ __pycache__/
 Untitled[1-9].ipynb
 Untitled.ipynb
 
+# rustの不要部分
+target/
+
 # その他
 .vscode/
+.python_version
 build/
 dist/
 py_workdays.egg-info/
