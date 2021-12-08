@@ -1,21 +1,15 @@
 # pythonの不要部分
 __pycache__/
-*.py[cod]
-
-# jupyterの不要部分
-.ipynb_checkpoints/
-Untitled[1-9].ipynb
-Untitled.ipynb
+*.py[co]
 
 # rustの不要部分
 target/
 
 # その他
 .vscode/
-.python_version
+.python-version
 build/
 dist/
-py_workdays.egg-info/
 py_workdays/source/
 develops/
 develops_test/
