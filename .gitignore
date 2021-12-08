@@ -1,6 +1,6 @@
 # pythonの不要部分
 __pycache__/
-*.py[co]
+*.py[cod]
 
 # rustの不要部分
 target/
