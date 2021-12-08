@@ -23,7 +23,7 @@ import numpy as np
 import py_workdays
 ```
 
-### 指定期間の営業日を取得
+## 指定期間の営業日を取得
 
 
 ```python
@@ -36,7 +36,8 @@ print(workdays)
 
     [datetime.date(2021, 1, 4), datetime.date(2021, 1, 5), datetime.date(2021, 1, 6), datetime.date(2021, 1, 7), datetime.date(2021, 1, 8), datetime.date(2021, 1, 12), datetime.date(2021, 1, 13), datetime.date(2021, 1, 14), datetime.date(2021, 1, 15), datetime.date(2021, 1, 18), datetime.date(2021, 1, 19), datetime.date(2021, 1, 20), datetime.date(2021, 1, 21), datetime.date(2021, 1, 22), datetime.date(2021, 1, 25), datetime.date(2021, 1, 26), datetime.date(2021, 1, 27), datetime.date(2021, 1, 28), datetime.date(2021, 1, 29)]
     
-### 営業日かどうか判定
+
+## 営業日かどうか判定
 
 
 ```python
@@ -50,7 +51,8 @@ py_workdays.check_workday(select_date)
     False
 
 
-### 次の営業日を取得
+
+## 次の営業日を取得
 
 
 ```python
@@ -66,7 +68,8 @@ next_workday
     datetime.date(2021, 1, 12)
 
 
-### 指定する日数分の営業日を取得
+
+## 指定する日数分の営業日を取得
 
 
 ```python
@@ -78,8 +81,9 @@ print(workdays)
 ```
 
     [datetime.date(2021, 1, 4), datetime.date(2021, 1, 5), datetime.date(2021, 1, 6), datetime.date(2021, 1, 7), datetime.date(2021, 1, 8), datetime.date(2021, 1, 12), datetime.date(2021, 1, 13), datetime.date(2021, 1, 14), datetime.date(2021, 1, 15), datetime.date(2021, 1, 18), datetime.date(2021, 1, 19), datetime.date(2021, 1, 20), datetime.date(2021, 1, 21), datetime.date(2021, 1, 22), datetime.date(2021, 1, 25), datetime.date(2021, 1, 26), datetime.date(2021, 1, 27), datetime.date(2021, 1, 28), datetime.date(2021, 1, 29)]
+    
 
-### 営業日・営業時間内か判定
+## 営業日・営業時間内か判定
 
 デフォルトでは，東京証券取引所の営業日(土日・祝日，振替休日を除く)・営業時間(9時～11時30分，12時30分～15時)として利用できる．
 
@@ -97,7 +101,7 @@ py_workdays.check_workday_intraday(select_datetime)
 
 
 
-### 指定日時から最も近い次の営業日・営業時間の日時を取得
+## 指定日時から最も近い次の営業日・営業時間の日時を取得
 
 
 ```python
@@ -113,7 +117,8 @@ next_border_datetime, border_symbol
     (datetime.datetime(2021, 1, 4, 9, 0), 'border_start')
 
 
-### 指定日時とtimedeltaから営業時間分加算する
+
+## 指定日時とtimedeltaから営業時間分加算する
 
 
 ```python
@@ -128,7 +133,9 @@ added_datetime
 
     datetime.datetime(2021, 1, 4, 11, 0)
 
-### 指定期間の営業時間分のtimedeltaを取得する
+
+
+## 指定期間の営業時間分のtimedeltaを取得する
 
 
 ```python
@@ -148,6 +155,9 @@ workdays_intraday_timedelta
 
 
 
+## pandas.DataFrameから営業時間内のデータを抽出
+
+
 ```python
 aware_df = pd.read_csv("aware_stock_df.csv", parse_dates=True, index_col="timestamp")
 ```
@@ -163,7 +173,7 @@ plt.plot(x, y)
 
 
 
-    [<matplotlib.lines.Line2D at 0x23acc396a30>]
+    [<matplotlib.lines.Line2D at 0x232c8af5160>]
 
 
 
@@ -184,12 +194,79 @@ plt.plot(x, y)
 
 
 
-    [<matplotlib.lines.Line2D at 0x23acbcec880>]
+    [<matplotlib.lines.Line2D at 0x232c845c7c0>]
 
 
 
+
+   <img src="https://dl.dropboxusercontent.com/s/v70h9rdvwrtpyo3/output_28_1.png?dl=0"> 
 
     
-<img src="https://dl.dropboxusercontent.com/s/v70h9rdvwrtpyo3/output_28_1.png?dl=0">
+
+
+##  営業時間・休日データの設定 
+
+休日とする曜日を整数で指定できる．デフォルトは土日(5,6)．営業時間は東京証券取引所のものであり，開始時間と終了時間のペアを複数指定できる
+
+
+```python
+config = py_workdays.config
+print(config.holiday_weekdays)
+print(config.intraday_borders)
+```
+
+    [5, 6]
+    [{'start': datetime.time(9, 0), 'end': datetime.time(11, 30)}, {'start': datetime.time(12, 30), 'end': datetime.time(15, 0)}]
     
 
+初めてのimport時に[内閣府のcsvファイル](https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv)を読み込んでパッケージ内部に保存する．デフォルトでは現在年の5年前から2年後までの祝日を利用できる．
+
+
+```python
+print(config.holiday_start_year)
+print(config.holiday_end_year)
+```
+
+    2016
+    2023
+    
+
+設定値は代入するか，リストの場合は`append`することで変更される
+
+
+```python
+config.intraday_borders = [{"start": datetime.time(9, 0), "end": datetime.time(13, 0)}]
+print(config.intraday_borders)
+```
+
+    [{'start': datetime.time(9, 0), 'end': datetime.time(13, 0)}]
+    
+
+`add_range_holidays`で祝日の追加ができる
+
+
+```python
+config.add_range_holidays([datetime.date(2022, 12, 31)])
+print(config.range_holidays[-1])
+```
+
+    2022-12-31
+    
+
+読み込むcsvを追加する場合は，`csv_source_paths`に`append`する．
+
+
+```python
+from pathlib import Path
+some_csv_path = Path("some_csv.csv")
+config.csv_source_paths.append(some_csv_path)
+```
+
+`some_source.csv`は以下のような形式になっている必要がある
+
+
+```
+1955-01-01,元日
+1955-01-15,成人の日
+1955-03-21,春分の日
+```
