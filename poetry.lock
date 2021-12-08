@@ -359,7 +359,7 @@ traitlets = "*"
 
 [[package]]
 name = "jupyter-server"
-version = "1.12.1"
+version = "1.13.0"
 description = "The backend—i.e. core services, APIs, and REST endpoints—to Jupyter web applications."
 category = "dev"
 optional = false
@@ -487,7 +487,7 @@ traitlets = "*"
 
 [[package]]
 name = "maturin"
-version = "0.12.3"
+version = "0.12.4"
 description = "Build and publish crates with pyo3, rust-cpython and cffi bindings as well as rust binaries as python packages"
 category = "dev"
 optional = false
@@ -696,6 +696,7 @@ numpy = [
     {version = ">=1.17.3", markers = "platform_machine != \"aarch64\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
     {version = ">=1.19.2", markers = "platform_machine == \"aarch64\" and python_version < \"3.10\""},
     {version = ">=1.20.0", markers = "platform_machine == \"arm64\" and python_version < \"3.10\""},
+    {version = ">=1.21.0", markers = "python_version >= \"3.10\""},
 ]
 python-dateutil = ">=2.7.3"
 pytz = ">=2017.3"
@@ -1092,20 +1093,21 @@ python-versions = "*"
 
 [[package]]
 name = "websocket-client"
-version = "1.2.1"
+version = "1.2.2"
 description = "WebSocket client for Python with low level API options"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 
 [package.extras]
+docs = ["Sphinx (>=3.4)", "sphinx-rtd-theme (>=0.5)"]
 optional = ["python-socks", "wsaccel"]
 test = ["websockets"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.9.6"
-content-hash = "a5ab732c851f21111bace80718309856efc32b15d1bf4546d0db0c077a2b028e"
+python-versions = "^3.9"
+content-hash = "fb04cb463c18281c3dae82e7b9d3f133fb4e24460ac41aacf43eb6f96e873b49"
 
 [metadata.files]
 anyio = [
@@ -1301,8 +1303,8 @@ jupyter-core = [
     {file = "jupyter_core-4.9.1.tar.gz", hash = "sha256:dce8a7499da5a53ae3afd5a9f4b02e5df1d57250cf48f3ad79da23b4778cd6fa"},
 ]
 jupyter-server = [
-    {file = "jupyter_server-1.12.1-py3-none-any.whl", hash = "sha256:93a84d06c35613ecf3bc5de8ff2d92a410a3a5f57a3a23444ca75e4b2b390209"},
-    {file = "jupyter_server-1.12.1.tar.gz", hash = "sha256:f71e10ebaa6704a1e0fe76ec70a16a0804ab5a9d268f0c512e8c69086a8e86d1"},
+    {file = "jupyter_server-1.13.0-py3-none-any.whl", hash = "sha256:608c0cb0cbbaa96a413c4d2427ca77acd14180251a2687831cf31f7648eaa835"},
+    {file = "jupyter_server-1.13.0.tar.gz", hash = "sha256:05a96dfc5352adf70e88868b4ab3d1fc13e17bd84daf74d02cc6299098855fda"},
 ]
 jupyterlab = [
     {file = "jupyterlab-3.2.4-py3-none-any.whl", hash = "sha256:b2375626001ab48af85e5da542a56a163ac8b490828642757e4e0e5e8c5af59d"},
@@ -1475,23 +1477,23 @@ matplotlib-inline = [
     {file = "matplotlib_inline-0.1.3-py3-none-any.whl", hash = "sha256:aed605ba3b72462d64d475a21a9296f400a19c4f74a31b59103d2a99ffd5aa5c"},
 ]
 maturin = [
-    {file = "maturin-0.12.3-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:75ea5784df399ed9ea5718f2ea58a41d04b13daeb9942d88327040bb1cf93fc9"},
-    {file = "maturin-0.12.3-py3-none-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:c95c93c89e1b819ae89a6bb23a1f5e39e40172fcde40f601c408b0942d76bfdc"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:350c729076bfb1bccd6910974d05368bd144cea00456360089b826c8b55ebdf0"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a6887ffa40b42ebc6fade8a9132240132e4e81b2e69b9c601353f02e254e61f8"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:ed376da65b8f5b79f7af581bb24214460ae0589b3aee9dd81dfe854d918c2d36"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:bc691da8371ac0553572a3af33795e2e3834d3f5179e6fc509d1a72a8b78b8d6"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:adc7b33694d04106a1d198024d56d208a8718d5a7767096673f101b5db0fc0d9"},
-    {file = "maturin-0.12.3-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:c6545beb68634475b811fb6c04add754bdf0be163c2508c56de8738e96e9a0b2"},
-    {file = "maturin-0.12.3-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:cb2f72f07337b0b9a5034e70ea40db812068602c5f6547435221b117090d77cd"},
-    {file = "maturin-0.12.3-py3-none-musllinux_1_1_armv7l.whl", hash = "sha256:a738a80ae097c3c5575e91a79e76e9fbc6830a4b44577507a99caffba65b084c"},
-    {file = "maturin-0.12.3-py3-none-musllinux_1_1_i686.whl", hash = "sha256:38dc7c2f235276ece74f086d88e25b93abe815b553079adb5045a6c2e91fd23b"},
-    {file = "maturin-0.12.3-py3-none-musllinux_1_1_ppc64le.whl", hash = "sha256:2d62252c2d514fa04764f5704b0480531c2f33cd4a980482814184b314d0ab15"},
-    {file = "maturin-0.12.3-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:6e4c33f4a32e9e6f2e7f153b1c9d8804d5aa913824cd5609dcef17ac77b10b69"},
-    {file = "maturin-0.12.3-py3-none-win32.whl", hash = "sha256:0553b9e2662665b06dc47ffb96ed2716fc7bd4e7a31db60d0728cde0986afc40"},
-    {file = "maturin-0.12.3-py3-none-win_amd64.whl", hash = "sha256:a331aed727068d9959300d4c57f1287a87fff9ef9551c31647bdda33f120a3c1"},
-    {file = "maturin-0.12.3-py3-none-win_arm64.whl", hash = "sha256:3ae65859db949b2b9c6b0e36609e143f648f143659999e38e27fefab70c5bf9e"},
-    {file = "maturin-0.12.3.tar.gz", hash = "sha256:82c4f429a65049eca867228257ccbf610929470cc15b1e09dfb4ebb9ce50d1ea"},
+    {file = "maturin-0.12.4-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:2cb49a09953d687b2d03d7236cec9d2c9dc48396e928931ba6f73be33c4ca1bb"},
+    {file = "maturin-0.12.4-py3-none-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:57ab18e5221dc0c234af4d5e513d978ae7de29872bea7fcb086647521fc42d3c"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:5b62bfd59c4a86d2b05e2fb4c4c0b2605f865ccd996fb37e8acd43daf0d0ddba"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:fa385da4fa9db41d9a5622ddd3d433c7a07c0ea4353f96b37713f9320a3da2eb"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:a5268a78d432b6a3718d6cd51d3bd6843c54b4ba924c501b83166daa3e432dbd"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:7aaf1139c2df9df8472c838023e9c13b56cfd6f77b33ac26b616ce0ed0923858"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:42c0733b1cbeafb46af0f0754ecd53d43fa50d4eef7487bb331cea72103385bd"},
+    {file = "maturin-0.12.4-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:4996417bc1dc90d2a0902a436653a2b95926889bd5929edae42346fad8bb61a3"},
+    {file = "maturin-0.12.4-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:4e3349d47395c2b31dccbb76429d071625b1a4f3d3ca6c16b72030c4209281a6"},
+    {file = "maturin-0.12.4-py3-none-musllinux_1_1_armv7l.whl", hash = "sha256:cd06966b01de8072b439c3b5710c09a1a976f994e22a527cd472f449f95b0660"},
+    {file = "maturin-0.12.4-py3-none-musllinux_1_1_i686.whl", hash = "sha256:3a8b0dd58150384213c62ec7b2fd511d649b0c33b87688500b138e2732d84f33"},
+    {file = "maturin-0.12.4-py3-none-musllinux_1_1_ppc64le.whl", hash = "sha256:9f4d4559fd92652c3cc3ec2cbe1cad24a70c1dafc7c6f2c35c9bc041f69b6a2d"},
+    {file = "maturin-0.12.4-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:ddf5d345fc08eddfd828ce4f41e0eac66f8eef0ee5992502e41a3dbfdc8cc8ac"},
+    {file = "maturin-0.12.4-py3-none-win32.whl", hash = "sha256:de5b387f235eb98e3531b32cc9f263130465c770e41d7e242171a5df1593a0ee"},
+    {file = "maturin-0.12.4-py3-none-win_amd64.whl", hash = "sha256:0ada87824537cf0177e4c91cf096aa4a931c916e5fbe0b84d0cf9bd05b1004a5"},
+    {file = "maturin-0.12.4-py3-none-win_arm64.whl", hash = "sha256:8d3ac1a9bff3aa8908e8391852449d5e1fda22e26886d137bc3b4ea54f1234e2"},
+    {file = "maturin-0.12.4.tar.gz", hash = "sha256:1b1928eb2955da62c055b2f88c5779f7796b467667414c3a338bb7cd33404f50"},
 ]
 mistune = [
     {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},
@@ -1914,6 +1916,6 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 websocket-client = [
-    {file = "websocket-client-1.2.1.tar.gz", hash = "sha256:8dfb715d8a992f5712fff8c843adae94e22b22a99b2c5e6b0ec4a1a981cc4e0d"},
-    {file = "websocket_client-1.2.1-py2.py3-none-any.whl", hash = "sha256:0133d2f784858e59959ce82ddac316634229da55b498aac311f1620567a710ec"},
+    {file = "websocket-client-1.2.2.tar.gz", hash = "sha256:21861f8645eb5725d1becfe86d7e7ae1a31d98b72556f9d44fcc5100976353cf"},
+    {file = "websocket_client-1.2.2-py3-none-any.whl", hash = "sha256:5d6a25cf0a8e936f473eceb53c4017ca85d91c7bc45c31634b62ec7190f5728e"},
 ]
