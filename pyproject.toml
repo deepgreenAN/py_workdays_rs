@@ -3,6 +3,7 @@ name = "py_workdays_rs"
 version = "0.1.0"
 description = ""
 authors = ["deepgreenAN <asami73dgreen63@gmail.com>"]
+include = ["py_workdays/**/*.pyd"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
